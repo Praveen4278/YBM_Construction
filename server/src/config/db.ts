@@ -335,9 +335,9 @@ const initialData: FallbackDB = {
     seoTitle: "YBM Construction — Building Tomorrow's Luxury Homes",
     seoDescription: "YBM Construction is South India's premium real estate builder, delivering architectural luxury villas and modern structural landmarks since 1998.",
     seoKeywords: "YBM Construction, Sidharth Housing, Luxury Homes, Chennai Real Estate, Premium Builder, Skyscraper Construction",
-    phone: "+91 94440 12345",
-    email: "hello@ybmconstruction.com",
-    address: "YBM Corporate Office, 12, Harrington Road, Chetpet, Chennai - 600031"
+    phone: "+91 99419 17868",
+    email: "hello@ybmconstruction.in",
+    address: "No: 64, 4th Layout, near DRG Hospital, Teacher's Colony, Kolathur, Chennai, Tamil Nadu 600099"
   }
 };
 

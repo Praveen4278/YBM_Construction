@@ -61,9 +61,9 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 py-4 px-5 md:py-7 md:px-8 lg:px-16 flex justify-between items-center transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 py-2 px-5 md:py-3 md:px-8 lg:px-12 flex justify-between items-center transition-all duration-500 ${
           scrolled
-            ? 'glass-nav py-3 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border-b border-black/5 bg-white/80'
+            ? 'glass-nav py-2 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border-b border-black/5 bg-white/80'
             : 'bg-transparent border-b border-transparent'
         }`}
       >
@@ -76,12 +76,12 @@ export const Navbar: React.FC = () => {
           <img
             src="/Logo.png"
             alt="YBM Logo"
-            className="h-16 md:h-28 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+            className="h-12 md:h-20 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
           />
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8 text-[11px] font-sans font-bold tracking-[2px] uppercase text-dark/80 pointer-events-auto">
+        <div className="hidden md:flex items-center gap-8 text-sm font-sans font-bold tracking-[2px] uppercase text-dark/80 pointer-events-auto">
           <a
             href="/"
             onClick={(e) => {
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
                       if (e.key === 'Enter' || e.key === ' ') { navigate(item.path); setDropdownOpen(false); }
                       if (e.key === 'Escape') setDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-5 py-3.5 text-[11px] font-sans font-bold tracking-[1.5px] uppercase transition-colors hover:bg-primary/10 hover:text-primary ${
+                    className={`w-full text-left px-5 py-3.5 text-xs font-sans font-bold tracking-[1.5px] uppercase transition-colors hover:bg-primary/10 hover:text-primary ${
                       location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-dark/80'
                     }`}
                   >
@@ -193,7 +193,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#contact"
               onClick={(e) => handleNavClick(e, 'contact')}
-              className="bg-primary hover:bg-white text-dark-2 text-[10px] font-sans font-bold tracking-[2px] px-6 py-3 rounded uppercase transition-all duration-300 hover:shadow-premium-glow hover:-translate-y-[2px]"
+              className="bg-primary hover:bg-white text-dark-2 text-xs font-sans font-bold tracking-[2px] px-6 py-3 rounded uppercase transition-all duration-300 hover:shadow-premium-glow hover:-translate-y-[2px]"
             >
               Get In Touch
             </a>
@@ -201,7 +201,7 @@ export const Navbar: React.FC = () => {
           <a
             href="/admin/login"
             onClick={(e) => { e.preventDefault(); navigate('/admin/login'); }}
-            className="text-dark/40 hover:text-primary text-[10px] font-sans font-bold tracking-[1px] uppercase transition-colors"
+            className="text-dark/40 hover:text-primary text-xs font-sans font-bold tracking-[1px] uppercase transition-colors"
           >
             CMS Login
           </a>

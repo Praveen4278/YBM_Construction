@@ -566,7 +566,7 @@ export const ProjectDetails: React.FC = () => {
               </div>
             ) : bookingStatus === 'error' ? (
               <div className="text-xs text-red-400 bg-red-400/10 border border-red-500/20 p-4 rounded text-center">
-                ❌ Failed logging visit inquiry. Please try again or contact hello@ybmconstruction.com.
+                ❌ Failed logging visit inquiry. Please try again or contact hello@ybmconstruction.in.
               </div>
             ) : (
               <button 

@@ -47,7 +47,7 @@ router.post('/', async (req: Request, res: Response) => {
     // 2. Try to Send Notification Email
     const transporter = getTransporter();
     if (transporter) {
-      const emailTo = process.env.SMTP_TO || 'hello@ybmconstruction.com';
+      const emailTo = process.env.SMTP_TO || 'hello@ybmconstruction.in';
       const mailOptions = {
         from: `"YBM Construction Website" <${process.env.SMTP_USER}>`,
         to: emailTo,

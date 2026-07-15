@@ -102,9 +102,9 @@ export const Home: React.FC = () => {
   const [services, setServices] = useState<any[]>(defaultServices);
   const [testimonials, setTestimonials] = useState<any[]>(defaultTestimonials);
   const [settings, setSettings] = useState<any>({
-    phone: "+91 94440 12345",
-    email: "hello@ybmconstruction.com",
-    address: "YBM Corporate Office, 12, Harrington Road, Chetpet, Chennai"
+    phone: "+91 99419 17868",
+    email: "hello@ybmconstruction.in",
+    address: "No: 64, 4th Layout, near DRG Hospital, Teacher's Colony, Kolathur, Chennai, Tamil Nadu 600099"
   });
 
   // GSAP Anim Progress States for 3D components
@@ -642,15 +642,18 @@ export const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* Premium Vector/Stylized Grid representation of Chennai Map */}
-            <div className="h-64 rounded-xl overflow-hidden relative border border-white/5 bg-dark-2 blueprint-grid-blue flex items-center justify-center text-center p-4">
-              <div className="absolute inset-0 bg-dark-2/40 z-10" />
-              <div className="relative z-20">
-                <div className="w-4 h-4 rounded-full bg-primary animate-ping mx-auto mb-2" />
-                <div className="w-3.5 h-3.5 rounded-full bg-primary border-2 border-white mx-auto mb-2" />
-                <span className="text-[10px] font-sans font-bold tracking-[2px] uppercase text-white/90 block">YBM Chetpet Office</span>
-                <span className="text-[9px] text-white/40 block mt-1">12, Harrington Road, Chennai</span>
-              </div>
+            {/* Google Maps Embed */}
+            <div className="h-64 rounded-xl overflow-hidden relative border border-slate-100">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.529347816751!2d80.2014387!3d13.1289751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52648a189ccecb%3A0xf02eb5a2427226ad!2sYBM%20Travels!5e0!3m2!1sen!2sin!4v1784133808817!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="YBM Construction Office Location"
+              />
             </div>
           </div>
 
@@ -757,7 +760,7 @@ export const Home: React.FC = () => {
           <div>
             <h4 className="text-[10px] font-sans font-bold tracking-[2px] uppercase text-white mb-6">Headquarters</h4>
             <p className="text-xs text-gray leading-relaxed mb-2">
-              12, Harrington Road, Chetpet, Chennai - 600031
+              No: 64, 4th Layout, near DRG Hospital, Teacher's Colony, Kolathur, Chennai, Tamil Nadu 600099
             </p>
             <p className="text-xs text-primary font-bold">{settings.phone}</p>
           </div>

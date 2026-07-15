@@ -1,0 +1,396 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.writeLocalDB = exports.readLocalDB = exports.isMongoConnected = exports.connectDB = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+let mongoConnected = false;
+const FALLBACK_DIR = process.env.VERCEL === '1'
+    ? '/tmp/data'
+    : path_1.default.resolve(process.cwd(), 'data');
+const FALLBACK_PATH = path_1.default.join(FALLBACK_DIR, 'db_fallback.json');
+// Initial template data matching index.html/main.html content
+const initialData = {
+    projects: [
+        {
+            id: "vimalachal",
+            slug: "sidharth-vimalachal",
+            name: "Sidharth Vimalachal",
+            client: "Sidharth Housing",
+            location: "Vepery, Chennai",
+            year: 2008,
+            area: "200,000 Sq.Ft",
+            type: "residential",
+            category: "Apartment",
+            status: "completed",
+            tag: "Flagship",
+            description: "A luxury residential landmark in the heart of Vepery, designed with architectural excellence and state-of-the-art modern amenities.",
+            image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1200&q=80",
+            gallery: [
+                "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+            ],
+            videos: [],
+            brochure: "Brouchere - Lake View.pdf",
+            brochureUrl: "/Brouchere - Lake View.pdf",
+            timeline: [
+                { "title": "Planning", "status": "completed", "description": "Design finalization and building approvals.", "date": "Jan 2007" },
+                { "title": "Foundation", "status": "completed", "description": "Excavation and base concrete pouring completed.", "date": "Mar 2007" },
+                { "title": "Steel Structure", "status": "completed", "description": "Grid beam erections and pillar layout completed.", "date": "Jul 2007" },
+                { "title": "Concrete", "status": "completed", "description": "Slabs and wall masonry pouring finished.", "date": "Nov 2007" },
+                { "title": "Interior & Landscaping", "status": "completed", "description": "Woodwork and exterior landscaping completed.", "date": "Feb 2008" },
+                { "title": "Completion", "status": "completed", "description": "Handover and resident occupations.", "date": "May 2008" }
+            ],
+            testimonials: [
+                { "author": "Srinivasan", "text": "High quality finish and structure. Proud homeowner!", "rating": 5, "project": "Sidharth Vimalachal" }
+            ],
+            specs: {
+                structure: "Seismic Zone III compliant RCC framed structure.",
+                flooring: "Imported vitrified tiles in living/dining, wooden flooring in master bedroom.",
+                kitchen: "Granite platform with stainless steel sink, premium ceramic tiles dado.",
+                doors: "Teakwood main door frame with designer flush shutter."
+            },
+            modelConfig: {
+                type: "apartment",
+                color: "#d4a853",
+                wireframe: false
+            },
+            seo: {
+                title: "Sidharth Vimalachal - Luxury Home in Vepery",
+                description: "Discover Sidharth Vimalachal in Vepery, Chennai. Premium residential project by YBM.",
+                keywords: "Sidharth Vimalachal, Vepery, Chennai, luxury residential"
+            },
+            featured: false
+        },
+        {
+            id: "heights",
+            slug: "sidharth-heights",
+            name: "Sidharth Heights",
+            client: "Heights Resident Association",
+            location: "Saligramam, Chennai",
+            year: 2012,
+            area: "125,000 Sq.Ft",
+            type: "residential",
+            category: "Apartment",
+            status: "completed",
+            tag: "Completed",
+            description: "Premium high-rise residency featuring outstanding urban accessibility and contemporary architecture.",
+            image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80",
+            gallery: [
+                "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
+                "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&q=80"
+            ],
+            videos: [],
+            brochure: "Brouchere - Royal Castle.pdf",
+            brochureUrl: "/Brouchere - Royal Castle.pdf",
+            timeline: [
+                { "title": "Planning", "status": "completed", "description": "Architectural drawings and planning permissions.", "date": "Oct 2010" },
+                { "title": "Foundation", "status": "completed", "description": "Piling works and raft foundation concrete pouring.", "date": "Feb 2011" },
+                { "title": "Structure", "status": "completed", "description": "RCC framing up to 10 floors completed.", "date": "Jul 2011" },
+                { "title": "Finishes", "status": "completed", "description": "Plastering, tile laying and wood framing.", "date": "Jan 2012" },
+                { "title": "Completion", "status": "completed", "description": "Building inspection and keys handover.", "date": "Apr 2012" }
+            ],
+            testimonials: [
+                { "author": "Prakash", "text": "Superb structural strength and layout planning.", "rating": 5, "project": "Sidharth Heights" }
+            ],
+            specs: {
+                structure: "RCC framed structure with aerated concrete blocks.",
+                flooring: "Vitrified tile flooring in all rooms.",
+                kitchen: "Polished granite counter with glazed tile tiles up to 2 feet.",
+                doors: "Hardwood frames with commercial flush doors."
+            },
+            modelConfig: {
+                type: "apartment",
+                color: "#8892b0",
+                wireframe: false
+            },
+            seo: {
+                title: "Sidharth Heights - Saligramam Chennai Apartments",
+                description: "Explore premium high-rise residences at Sidharth Heights in Saligramam. Premium builder projects.",
+                keywords: "Sidharth Heights, Saligramam, Chennai, apartments"
+            },
+            featured: false
+        },
+        {
+            id: "natura",
+            slug: "sidharth-natura",
+            name: "Sidharth Natura",
+            client: "Green Wood Real Estate",
+            location: "Medavakkam, Chennai",
+            year: 2015,
+            area: "130,000 Sq.Ft",
+            type: "residential",
+            category: "Villa",
+            status: "completed",
+            tag: "Green Build",
+            description: "Eco-friendly homes surrounded by natural green canopies, leveraging rainwater harvesting and smart energy efficiency.",
+            image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80",
+            gallery: [
+                "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80",
+                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80"
+            ],
+            videos: [],
+            brochure: "Brouchere - Royal Enclave.pdf",
+            brochureUrl: "/Brouchere - Royal Enclave.pdf",
+            timeline: [
+                { "title": "Planning", "status": "completed", "description": "Landscape integrations and green permit setups.", "date": "Jul 2014" },
+                { "title": "Excavation", "status": "completed", "description": "Earth work and rainwater trench works.", "date": "Sep 2014" },
+                { "title": "Construction", "status": "completed", "description": "Precast panels placement and framing structure.", "date": "Jan 2015" },
+                { "title": "Completion", "status": "completed", "description": "Solar installation and final handover checks.", "date": "Aug 2015" }
+            ],
+            testimonials: [
+                { "author": "Green Living Group", "text": "Very efficient insulation and water management design.", "rating": 5, "project": "Sidharth Natura" }
+            ],
+            specs: {
+                structure: "Precast concrete wall panels compliant with green building regulations.",
+                flooring: "Anti-skid premium matte tiles.",
+                kitchen: "Granite cooking top with modern chimney provision.",
+                doors: "Moulded skin doors with paint finish."
+            },
+            modelConfig: {
+                type: "villa",
+                color: "#2a9d8f",
+                wireframe: false
+            },
+            seo: {
+                title: "Sidharth Natura - Eco Friendly Villas Medavakkam",
+                description: "Invest in energy-efficient luxury green villas at Sidharth Natura in Medavakkam.",
+                keywords: "Sidharth Natura, Medavakkam, Chennai villas, green building"
+            },
+            featured: false
+        },
+        {
+            id: "upscale",
+            slug: "sidharth-upscale",
+            name: "Sidharth Upscale",
+            client: "Upscale Communities Ltd",
+            location: "Porur, Chennai",
+            year: 2018,
+            area: "447,000 Sq.Ft",
+            type: "residential",
+            category: "Apartment",
+            status: "completed",
+            tag: "Luxury",
+            description: "Modern lifestyle spaces configured with smart home triggers, advanced security features, and central leisure clubs.",
+            image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+            gallery: [
+                "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+                "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80"
+            ],
+            videos: [],
+            brochure: "Brouchere -Siva Nagar.pdf",
+            brochureUrl: "/Brouchere -Siva Nagar.pdf",
+            timeline: [
+                { "title": "Design", "status": "completed", "description": "High-rise structural drawings and wind tunnels test.", "date": "Mar 2016" },
+                { "title": "Piling & Foundation", "status": "completed", "description": "Deep foundation piling arrays completed.", "date": "Sep 2016" },
+                { "title": "RCC Framing", "status": "completed", "description": "Stacked column and beam framing across all blocks.", "date": "Jun 2017" },
+                { "title": "Façade & Glass", "status": "completed", "description": "Exterior glass panel walls and panel trims.", "date": "Dec 2017" },
+                { "title": "Inauguration", "status": "completed", "description": "Full resident handover and clubhouse operations.", "date": "Sep 2018" }
+            ],
+            testimonials: [
+                { "author": "Kammani", "text": "Great locality! I am happy with the location—the heart of the city feels connected to many schools, colleges, and hospitals.", "rating": 5, "project": "Sidharth Upscale" }
+            ],
+            specs: {
+                structure: "RCC shear wall system design structure.",
+                flooring: "Italian marble flooring in common areas, premium vitrified tiles in flats.",
+                kitchen: "Modular kitchen setup with premium fittings.",
+                doors: "Solid wood paneled designer doors with locks."
+            },
+            modelConfig: {
+                type: "apartment",
+                color: "#e5b964",
+                wireframe: false
+            },
+            seo: {
+                title: "Sidharth Upscale - Smart Luxury Homes in Porur",
+                description: "Explore luxury smart home apartments at Sidharth Upscale, Porur. World-class clubhouse amenities.",
+                keywords: "Sidharth Upscale, Porur, smart homes, Chennai luxury apartments"
+            },
+            featured: true
+        },
+        {
+            id: "nest",
+            slug: "sidharth-nest",
+            name: "Sidharth Nest",
+            client: "Nest Housing Society",
+            location: "Rajakilpakkam, Chennai",
+            year: 2021,
+            area: "172,000 Sq.Ft",
+            type: "residential",
+            category: "Villa",
+            status: "completed",
+            tag: "Premium",
+            description: "Compact luxury homes designed for cozy and modern living, featuring state-of-the-art layout patterns.",
+            image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80",
+            gallery: [
+                "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80",
+                "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=800&q=80"
+            ],
+            videos: [],
+            brochure: "Brouchere - Lake View.pdf",
+            brochureUrl: "/Brouchere - Lake View.pdf",
+            timeline: [
+                { "title": "Planning", "status": "completed", "description": "Approvals and blueprint alignments.", "date": "Jan 2020" },
+                { "title": "Foundation", "status": "completed", "description": "Base concrete footing columns layout.", "date": "Jun 2020" },
+                { "title": "Structure", "status": "completed", "description": "Brick work and slab structure pouring.", "date": "Nov 2020" },
+                { "title": "Finishing", "status": "completed", "description": "Plumbing, electrical and interior designs.", "date": "Mar 2021" },
+                { "title": "Handover", "status": "completed", "description": "Keys handover to residency owners.", "date": "Oct 2021" }
+            ],
+            testimonials: [
+                { "author": "Arun Kumar", "text": "Very responsive team and punctual project completion.", "rating": 5, "project": "Sidharth Nest" }
+            ],
+            specs: {
+                structure: "RCC earthquake resistant structure design.",
+                flooring: "Vitrified double-charge tiles.",
+                kitchen: "Polished granite counter table.",
+                doors: "Flush doors with water-resistant frames."
+            },
+            modelConfig: {
+                type: "villa",
+                color: "#374151",
+                wireframe: false
+            },
+            seo: {
+                title: "Sidharth Nest - Rajakilpakkam Premium Villas",
+                description: "Compact luxury homes and modern layouts at Sidharth Nest, Rajakilpakkam.",
+                keywords: "Sidharth Nest, Rajakilpakkam, Chennai, premium villas"
+            },
+            featured: false
+        }
+    ],
+    testimonials: [
+        {
+            id: "t1",
+            author: "Kammani",
+            project: "Sidharth Upscale — C002",
+            text: "Great locality! I am happy with the location—the heart of the city feels connected to many schools, colleges, and hospitals. I am glad that we are a part of the YBM Construction family.",
+            avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&fit=crop",
+            rating: 5
+        },
+        {
+            id: "t2",
+            author: "Srinivasan",
+            project: "Sidharth Upscale — B502",
+            text: "Happy and proud home-owners! From booking to handover, everything was very easy and hassle-free. The location is close to schools and the connectivity is great. We heartily recommend YBM.",
+            avatar: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=150&fit=crop",
+            rating: 5
+        },
+        {
+            id: "t3",
+            author: "Prakash",
+            project: "Sidharth Heights — A101",
+            text: "The construction quality is superb. We've been living here for 5 years and have faced zero issues with seepage or fittings. Extremely professional customer care support team as well.",
+            avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&fit=crop",
+            rating: 5
+        }
+    ],
+    services: [
+        {
+            id: "s1",
+            title: "Architectural Design",
+            description: "Crafting iconic and visually striking modern luxury villas, commercial spaces, and skyscrapers with detailed precision.",
+            icon: "Compass",
+            image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80"
+        },
+        {
+            id: "s2",
+            title: "Structural Engineering",
+            description: "Executing complex building blueprints into structurally sound, earthquake-resistant frames utilizing premium steel and concrete.",
+            icon: "Shield",
+            image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?w=800&q=80"
+        },
+        {
+            id: "s3",
+            title: "General Construction",
+            description: "Deploying highly skilled construction engineers, state-of-the-art machinery, and automated timelines to achieve rapid delivery.",
+            icon: "Hammer",
+            image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80"
+        },
+        {
+            id: "s4",
+            title: "Interior Architecture",
+            description: "Defining luxury, comfort, and functionality with premium marble floor finishes, ambient ceiling structures, and custom cabinets.",
+            icon: "Layout",
+            image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80"
+        },
+        {
+            id: "s5",
+            title: "Project Management",
+            description: "Supervising full-scale end-to-end building operations ensuring quality audits, budget controls, and exact scheduled completions.",
+            icon: "Briefcase",
+            image: "https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?w=800&q=80"
+        }
+    ],
+    submissions: [],
+    settings: {
+        seoTitle: "YBM Construction — Building Tomorrow's Luxury Homes",
+        seoDescription: "YBM Construction is South India's premium real estate builder, delivering architectural luxury villas and modern structural landmarks since 1998.",
+        seoKeywords: "YBM Construction, Sidharth Housing, Luxury Homes, Chennai Real Estate, Premium Builder, Skyscraper Construction",
+        phone: "+91 94440 12345",
+        email: "hello@ybmconstruction.com",
+        address: "YBM Corporate Office, 12, Harrington Road, Chetpet, Chennai - 600031"
+    }
+};
+const connectDB = async () => {
+    const mongoURI = process.env.MONGODB_URI;
+    if (!mongoURI) {
+        console.warn("⚠️ MONGODB_URI env variable is not set. Switching to Local JSON File Database...");
+        initializeLocalDB();
+        return;
+    }
+    try {
+        const conn = await mongoose_1.default.connect(mongoURI, {
+            serverSelectionTimeoutMS: 3000 // 3 seconds timeout
+        });
+        console.log(`🔌 Connected to MongoDB: ${conn.connection.host}`);
+        mongoConnected = true;
+    }
+    catch (error) {
+        console.error("❌ MongoDB connection failed. Falling back to Local JSON File Database.");
+        initializeLocalDB();
+    }
+};
+exports.connectDB = connectDB;
+const isMongoConnected = () => mongoConnected;
+exports.isMongoConnected = isMongoConnected;
+// Local file storage helpers
+const initializeLocalDB = () => {
+    if (!fs_1.default.existsSync(FALLBACK_DIR)) {
+        fs_1.default.mkdirSync(FALLBACK_DIR, { recursive: true });
+    }
+    if (!fs_1.default.existsSync(FALLBACK_PATH)) {
+        fs_1.default.writeFileSync(FALLBACK_PATH, JSON.stringify(initialData, null, 2), 'utf-8');
+        console.log("📁 Initialized mock database file at data/db_fallback.json");
+    }
+    else {
+        console.log("📁 Loaded existing local database file at data/db_fallback.json");
+    }
+};
+const readLocalDB = () => {
+    try {
+        initializeLocalDB();
+        const raw = fs_1.default.readFileSync(FALLBACK_PATH, 'utf-8');
+        return JSON.parse(raw);
+    }
+    catch (e) {
+        console.error("Failed to read local fallback DB, using default structure:", e);
+        return initialData;
+    }
+};
+exports.readLocalDB = readLocalDB;
+const writeLocalDB = (data) => {
+    try {
+        if (!fs_1.default.existsSync(FALLBACK_DIR)) {
+            fs_1.default.mkdirSync(FALLBACK_DIR, { recursive: true });
+        }
+        fs_1.default.writeFileSync(FALLBACK_PATH, JSON.stringify(data, null, 2), 'utf-8');
+    }
+    catch (e) {
+        console.error("Failed to write local fallback DB:", e);
+    }
+};
+exports.writeLocalDB = writeLocalDB;

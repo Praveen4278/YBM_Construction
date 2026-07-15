@@ -312,7 +312,7 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="text-primary text-[13px] font-sans font-bold tracking-[6px] uppercase mb-4 block drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+            className="text-primary text-[10px] md:text-[13px] font-sans font-bold tracking-[3px] md:tracking-[6px] uppercase mb-4 block drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
           >
             LUXURY ARCHITECTURE & ENGINEERING &middot; CHENNAI
           </motion.span>
@@ -320,7 +320,7 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="font-serif-display text-5xl md:text-8xl text-white font-bold leading-[1.05] tracking-tight mb-8 drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)]"
+            className="font-serif-display text-3xl sm:text-5xl md:text-8xl text-white font-bold leading-[1.05] tracking-tight mb-6 md:mb-8 drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)]"
           >
             We Build <span className="italic text-primary drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)]">Sculptural</span> Homes
           </motion.h1>
@@ -328,7 +328,7 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2, delay: 1.5 }}
-            className="text-white font-sans text-base md:text-xl max-w-xl leading-relaxed mb-12 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium"
+            className="text-white font-sans text-sm md:text-xl max-w-xl leading-relaxed mb-8 md:mb-12 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium hidden sm:block"
           >
             South India's premier design-build agency. We engineer timeless architectural landmarks, integrating luxury aesthetics with structural permanence.
           </motion.p>
@@ -336,19 +336,19 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.7 }}
-            className="flex gap-4 items-center"
+            className="flex flex-wrap gap-3 items-center"
           >
             <Magnetic>
               <a 
                 href="#portfolio" 
-                className="bg-primary hover:bg-white text-dark-2 text-xs font-bold tracking-[2px] px-8 py-4 rounded uppercase flex items-center gap-2 transition-all duration-300 hover:shadow-premium-glow hover:-translate-y-1"
+                className="bg-primary hover:bg-white text-dark-2 text-xs font-bold tracking-[2px] px-6 py-3 md:px-8 md:py-4 rounded uppercase flex items-center gap-2 transition-all duration-300 hover:shadow-premium-glow hover:-translate-y-1"
               >
                 Explore Works <ArrowRight size={16} />
               </a>
             </Magnetic>
             <a 
               href="#about" 
-              className="border border-white/20 hover:border-white hover:bg-white/5 text-white text-xs font-bold tracking-[2px] px-8 py-4 rounded uppercase transition-colors"
+              className="border border-white/20 hover:border-white hover:bg-white/5 text-white text-xs font-bold tracking-[2px] px-6 py-3 md:px-8 md:py-4 rounded uppercase transition-colors"
             >
               Our History
             </a>
@@ -366,11 +366,11 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 4. WHO WE ARE & PILLARS SECTION */}
-      <section id="about" className="py-32 px-6 md:px-16 max-w-7xl mx-auto">
+      <section id="about" className="py-16 md:py-32 px-5 md:px-16 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
             <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">WHO WE ARE</span>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold leading-[1.1] mb-8">
+            <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold leading-[1.1] mb-8">
               Pillars of <span className="italic text-primary">Reliability</span> & Excellence
             </h2>
             <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-12">
@@ -412,11 +412,11 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 5. NEW VIDEO SECTION - SAME LAYOUT AS WHO WE ARE */}
-      <section id="video" className="py-32 px-6 md:px-16 max-w-7xl mx-auto bg-slate-50/50">
+      <section id="video" className="py-16 md:py-32 px-5 md:px-16 max-w-7xl mx-auto bg-slate-50/50">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
             <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">ARCHITECTURAL VISION</span>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold leading-[1.1] mb-8">
+            <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold leading-[1.1] mb-8">
               Crafting <span className="italic text-primary">Timeless</span> Spaces
             </h2>
             <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-12">
@@ -440,7 +440,7 @@ export const Home: React.FC = () => {
 
           <div className="relative">
             {/* Video panel */}
-            <div className="relative w-full h-[500px] overflow-hidden rounded-xl">
+            <div className="relative w-full h-[280px] sm:h-[400px] md:h-[500px] overflow-hidden rounded-xl">
               <VideoPlayer />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-2/30 via-transparent to-transparent" />
               
@@ -454,7 +454,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 6. BUILDING CONSTRUCTION TIMELINE SCROLL-PINNED SECTION */}
-      <section ref={timelineSectionRef} id="timeline" className="h-[100vh] w-full bg-dark-2 relative overflow-hidden">
+      <section ref={timelineSectionRef} id="timeline" className="h-[100vh] w-full bg-dark-2 relative overflow-hidden hidden md:block">
         <div className="w-full h-full flex flex-col lg:flex-row-reverse relative z-10">
           
           {/* Visual canvas represent timeline */}
@@ -493,18 +493,18 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 7. EXPANDING HORIZONTAL SERVICES */}
-      <section id="services" className="py-32 px-6 md:px-16 max-w-7xl mx-auto">
+      <section id="services" className="py-16 md:py-32 px-5 md:px-16 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-3 block">SERVICES</span>
-          <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold">What We Deliver</h2>
+          <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold">What We Deliver</h2>
         </div>
 
         {/* Expanding Accordion Horizontal flex container */}
-        <div className="flex flex-col lg:flex-row w-full gap-4 h-[500px]">
+        <div className="flex flex-col lg:flex-row w-full gap-4 lg:h-[500px]">
           {services.map((serv, index) => (
             <div 
               key={serv.id}
-              className="group relative flex-1 hover:flex-[2.5] bg-white rounded-xl overflow-hidden transition-all duration-700 ease-out border border-slate-100 shadow-sm cursor-pointer"
+              className="group relative flex-1 lg:hover:flex-[2.5] bg-white rounded-xl overflow-hidden transition-all duration-700 ease-out border border-slate-100 shadow-sm cursor-pointer h-48 lg:h-auto"
             >
               {/* Background cover image */}
               <img
@@ -535,11 +535,11 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 8. COMPLETED PROJECTS PORTFOLIO */}
-      <section id="portfolio" className="py-32 bg-slate-50/50 px-6 md:px-16">
+      <section id="portfolio" className="py-16 md:py-32 bg-slate-50/50 px-5 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
             <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-3 block">PORTFOLIO</span>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold">Featured Projects</h2>
+            <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold">Featured Projects</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -572,13 +572,13 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 9. STATISTICS & OVERVIEW SECTION */}
-      <section ref={statsSectionRef} className="py-32 px-6 md:px-16 bg-white relative">
+      <section ref={statsSectionRef} className="py-16 md:py-32 px-5 md:px-16 bg-white relative">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
           {/* Left panel describing facts */}
           <div>
             <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">STATISTICS</span>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold mb-8">
+            <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold mb-8">
               Numbers that <br />Define <span className="italic text-primary">Reliability</span>
             </h2>
             <p className="text-slate-600 text-base leading-relaxed mb-8">
@@ -603,7 +603,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Right panel visual rising columns representing concrete growth */}
-          <div className="flex justify-around items-end h-[350px] bg-slate-50 p-8 rounded-xl border border-slate-100 shadow-sm">
+          <div className="flex justify-around items-end h-[220px] md:h-[350px] bg-slate-50 p-4 md:p-8 rounded-xl border border-slate-100 shadow-sm">
             {[
               { height: "25%", label: "1998", val: "10" },
               { height: "45%", label: "2005", val: "22" },
@@ -627,12 +627,12 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 11. TESTIMONIALS SECTION */}
-      <section id="testimonials" className="py-32 bg-slate-50/50 px-6 md:px-16 relative">
+      <section id="testimonials" className="py-16 md:py-32 bg-slate-50/50 px-5 md:px-16 relative">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">TESTIMONIALS</span>
-          <h2 className="font-serif-display text-4xl md:text-5xl text-dark font-bold mb-12">Client Stories</h2>
+          <h2 className="font-serif-display text-3xl md:text-5xl text-dark font-bold mb-12">Client Stories</h2>
 
-          <div className="relative bg-white p-8 md:p-16 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="relative bg-white p-6 md:p-16 rounded-2xl border border-slate-100 shadow-sm">
             {/* Displaying simple test sliders */}
             <div className="flex flex-col items-center text-center">
               <div className="flex gap-1 mb-6 text-primary">
@@ -658,13 +658,13 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 12. CONTACT SECTION & STYLIZED MAP */}
-      <section id="contact" className="py-32 bg-white px-6 md:px-16">
+      <section id="contact" className="py-16 md:py-32 bg-white px-5 md:px-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* Contact Details & Stylized Map representation */}
           <div>
             <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">INQUIRIES</span>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-dark font-bold mb-8">Let's Build</h2>
+            <h2 className="font-serif-display text-3xl md:text-6xl text-dark font-bold mb-8">Let's Build</h2>
             <p className="text-slate-600 text-base leading-relaxed mb-8">
               Visit our headquarters to inspect structural blueprints, wood catalog finishes, and virtual 3D walkthrough models.
             </p>
@@ -706,7 +706,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Form */}
-          <div className="bg-slate-50/60 border border-slate-100 p-8 md:p-12 rounded-2xl shadow-sm">
+          <div className="bg-slate-50/60 border border-slate-100 p-6 md:p-12 rounded-2xl shadow-sm">
             <h3 className="font-serif-display text-2xl md:text-3xl text-dark font-bold mb-6">Send Message</h3>
             
             <form onSubmit={handleContactSubmit} className="space-y-6">
@@ -782,7 +782,7 @@ export const Home: React.FC = () => {
           </ThreeCanvas>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-16 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 mt-40">
+        <div className="max-w-7xl mx-auto px-5 md:px-16 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-16 md:mt-40">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <img src="/Logo.png" alt="Logo" className="h-6 w-auto filter brightness-0 invert" />
@@ -814,7 +814,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-16 relative z-10 border-t border-white/5 mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center text-[10px] text-gray gap-4">
+        <div className="max-w-7xl mx-auto px-5 md:px-16 relative z-10 border-t border-white/5 mt-10 md:mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center text-[10px] text-gray gap-4">
           <p>&copy; {new Date().getFullYear()} YBM Construction. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="/admin/login" className="hover:text-primary transition-colors">CMS Console</a>

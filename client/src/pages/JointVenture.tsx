@@ -49,14 +49,14 @@ const PartnerForm: React.FC = () => {
 
   return (
     <section id="partner-form" className="py-24 px-6 md:px-16" style={{ background: '#031124' }}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-1">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-10 md:mb-14"
         >
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
             style={{ background: 'rgba(212,168,83,0.1)', border: '1px solid rgba(212,168,83,0.25)' }}>
@@ -65,7 +65,7 @@ const PartnerForm: React.FC = () => {
               Partner With Us
             </span>
           </div>
-          <h2 className="font-serif-display text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="font-serif-display text-3xl md:text-5xl font-bold text-white mb-4">
             Let's Build Something{' '}
             <span className="italic" style={{ color: GOLD }}>Extraordinary.</span>
           </h2>
@@ -97,7 +97,7 @@ const PartnerForm: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="rounded-2xl p-8 md:p-12 border"
+            className="rounded-2xl p-6 md:p-12 border"
             style={{ background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(212,168,83,0.15)' }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -251,7 +251,7 @@ const JointVenture: React.FC = () => (
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
         style={{ background: 'rgba(212,168,83,0.05)' }} />
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-16 py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-5 md:px-16 py-28 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
         {/* ── LEFT COLUMN ── */}
         <motion.div
@@ -269,7 +269,7 @@ const JointVenture: React.FC = () => (
           </div>
 
           {/* Heading */}
-          <h1 className="font-serif-display text-5xl md:text-6xl xl:text-7xl text-dark font-bold leading-[1.05] tracking-tight mb-6">
+          <h1 className="font-serif-display text-4xl sm:text-5xl md:text-6xl xl:text-7xl text-dark font-bold leading-[1.05] tracking-tight mb-6">
             Build Together.{' '}
             <span className="italic" style={{ color: GOLD }}>
               Grow Together.
@@ -394,8 +394,8 @@ const JointVenture: React.FC = () => (
             </div>
           </div>
 
-          {/* Floating stat cards */}
-          <div className="absolute -right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3">
+          {/* Floating stat cards — hidden on mobile to avoid overflow */}
+          <div className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 flex-col gap-3">
             {floatingStats.map((s, i) => (
               <motion.div
                 key={i}
@@ -412,12 +412,12 @@ const JointVenture: React.FC = () => (
             ))}
           </div>
 
-          {/* ROI chart floating card */}
+          {/* ROI chart floating card — hidden on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1 }}
-            className="absolute -bottom-6 -left-4 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 w-52"
+            className="hidden lg:block absolute -bottom-6 -left-4 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 w-52"
           >
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[1px] mb-3">ROI Growth</p>
             <div className="flex items-end gap-1.5 h-12">
@@ -445,7 +445,7 @@ const JointVenture: React.FC = () => (
     <section id="jv-details" className="py-24 px-6 md:px-16 bg-slate-50/60">
       <div className="max-w-7xl mx-auto text-center">
         <span className="text-[10px] font-bold tracking-[3px] uppercase mb-3 block" style={{ color: GOLD }}>HOW IT WORKS</span>
-        <h2 className="font-serif-display text-4xl md:text-5xl text-dark font-bold mb-16">
+        <h2 className="font-serif-display text-3xl md:text-5xl text-dark font-bold mb-10 md:mb-16">
           Your Land. Our Expertise.{' '}
           <span className="italic" style={{ color: GOLD }}>Shared Success.</span>
         </h2>

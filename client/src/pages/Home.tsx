@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
   MapPin, 
@@ -93,8 +93,7 @@ const VideoPlayer = () => {
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [loadPercentage, setLoadPercentage] = useState(0);
+  const [loading] = useState(false);
 
   // Dynamic Data States
   const [projects, setProjects] = useState<any[]>(defaultProjects);
@@ -140,20 +139,7 @@ export const Home: React.FC = () => {
     fetchSiteData();
   }, []);
 
-  // Preloader Simulation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadPercentage((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setLoading(false), 800);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 8) + 4;
-      });
-    }, 80);
-    return () => clearInterval(interval);
-  }, []);
+
 
   // GSAP ScrollTrigger Configurations
   const timelineSectionRef = useRef<HTMLDivElement>(null);
@@ -248,46 +234,7 @@ export const Home: React.FC = () => {
 
   return (
     <div className="relative bg-white text-dark overflow-x-hidden">
-      {/* 1. LUXURY SVG PRELOADER */}
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            key="preloader"
-            initial={{ opacity: 1 }}
-            exit={{ y: '-100vh', transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-            className="fixed inset-0 bg-dark-2 z-[99999] flex flex-col items-center justify-center"
-          >
-            <div className="w-[120px] h-[120px] mb-8 relative">
-              {/* Animated Blueprint Drawing Grid logo overlay */}
-              <svg viewBox="0 0 100 100" className="w-full h-full stroke-primary fill-none stroke-[1.5]">
-                <motion.path
-                  d="M10 90 L50 10 L90 90 Z" // Architectural Triangle A
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, ease: "easeInOut" }}
-                />
-                <motion.path
-                  d="M10 90 L90 90 M50 10 L50 90" // T-Square grid lines
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.2, delay: 0.5, ease: "easeInOut" }}
-                />
-              </svg>
-            </div>
-            <h1 className="font-serif-display text-2xl tracking-[4px] text-white/90 mb-2 uppercase">YBM CONSTRUCTION</h1>
-            <p className="text-primary text-xs tracking-[6px] uppercase mb-12">Building Excellence</p>
-            
-            {/* Loading Percentage count */}
-            <div className="relative w-48 h-[1px] bg-white/10 overflow-hidden">
-              <motion.div 
-                className="absolute top-0 left-0 h-full bg-primary"
-                style={{ width: `${loadPercentage}%` }}
-              />
-            </div>
-            <span className="text-[10px] font-sans tracking-[3px] text-white/40 mt-4 uppercase">LOADING Blueprint {loadPercentage}%</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* 2. GLASS NAVIGATION BAR */}
       <Navbar />

@@ -312,7 +312,7 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="text-primary text-[11px] font-sans font-bold tracking-[4px] uppercase mb-4 block drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+            className="text-primary text-[13px] font-sans font-bold tracking-[6px] uppercase mb-4 block drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
           >
             LUXURY ARCHITECTURE & ENGINEERING &middot; CHENNAI
           </motion.span>

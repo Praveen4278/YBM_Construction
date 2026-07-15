@@ -53,9 +53,9 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 py-5 px-6 md:px-12 flex justify-between items-center transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full z-50 py-7 px-8 md:px-16 flex justify-between items-center transition-all duration-500 ${
         scrolled
-          ? 'glass-nav py-3 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border-b border-black/5 bg-white/80'
+          ? 'glass-nav py-4 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border-b border-black/5 bg-white/80'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
@@ -68,11 +68,8 @@ export const Navbar: React.FC = () => {
         <img
           src="/Logo.png"
           alt="YBM Logo"
-          className="h-20 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+          className="h-28 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="font-serif-display text-lg tracking-[2px] text-dark font-bold hidden sm:inline-block">
-          YBM
-        </span>
       </a>
 
       {/* Desktop Nav */}

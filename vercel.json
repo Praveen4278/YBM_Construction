@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "npm install --prefix client && npm run build --prefix client && npm install --prefix server && npm run build --prefix server",
-  "outputDirectory": "client/dist",
   "builds": [
     {
       "src": "api/index.js",
@@ -18,19 +16,12 @@
       "dest": "/api/index.js"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/client/dist/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|svg|ico|webp|woff|woff2|ttf|pdf))",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|svg|ico|webp|woff|woff2|ttf|pdf|mp4|mov))",
       "dest": "/client/dist/$1"
     },
     {
       "src": "/(.*)",
       "dest": "/client/dist/index.html"
     }
-  ],
-  "env": {
-    "VERCEL": "1"
-  }
+  ]
 }

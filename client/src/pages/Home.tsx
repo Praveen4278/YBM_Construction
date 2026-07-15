@@ -82,12 +82,14 @@ const VideoPlayer = () => {
   return (
     <video
       ref={videoRef}
-      src="/architech.mov"
       muted
       loop
       playsInline
       className="absolute inset-0 w-full h-full object-cover"
-    />
+    >
+      <source src="/architech.mp4" type="video/mp4" />
+      <source src="/architech.mov" type="video/quicktime" />
+    </video>
   );
 };
 
@@ -253,8 +255,8 @@ export const Home: React.FC = () => {
         </video>
 
         {/* Hero Copy overlay */}
-        <div className="absolute inset-0 z-20 flex items-center justify-start px-6 md:px-16">
-          <div className="max-w-4xl mt-12">
+        <div className="absolute inset-0 z-20 flex items-end sm:items-center justify-start px-5 md:px-16 pb-16 sm:pb-0">
+          <div className="max-w-4xl sm:mt-12">
           <motion.span
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}

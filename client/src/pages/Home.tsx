@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { apiService } from '../utils/api';
 import ThreeCanvas from '../components/ThreeCanvas';
-import ConstructionTimeline from '../components/ConstructionTimeline';
 import CitySkyline from '../components/CitySkyline';
 import Magnetic from '../components/Magnetic';
 import Navbar from '../components/Navbar';
@@ -96,6 +95,7 @@ const VideoPlayer = () => {
 export const Home: React.FC = () => {
   const navigate = useNavigate();
   const [loading] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   // Dynamic Data States
   const [projects, setProjects] = useState<any[]>(defaultProjects);
@@ -108,8 +108,6 @@ export const Home: React.FC = () => {
   });
 
   // GSAP Anim Progress States for 3D components
-  const [timelineProgress, setTimelineProgress] = useState(0);
-
   // Form States
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -144,23 +142,10 @@ export const Home: React.FC = () => {
 
 
   // GSAP ScrollTrigger Configurations
-  const timelineSectionRef = useRef<HTMLDivElement>(null);
   const statsSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (loading) return;
-
-    // Pinning Timeline Section & Linking Scroll
-    const tlTrigger = ScrollTrigger.create({
-      trigger: timelineSectionRef.current,
-      start: "top top",
-      end: "+=150%",
-      pin: true,
-      scrub: true,
-      onUpdate: (self) => {
-        setTimelineProgress(self.progress);
-      }
-    });
 
     // Stats Section Count-Up animation triggers
     const statsElements = document.querySelectorAll('.stat-count');
@@ -200,7 +185,6 @@ export const Home: React.FC = () => {
     });
 
     return () => {
-      tlTrigger.kill();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [loading]);
@@ -241,6 +225,40 @@ export const Home: React.FC = () => {
       {/* 2. GLASS NAVIGATION BAR */}
       <Navbar />
 
+      {/* LOADING SCREEN */}
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: videoReady ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        style={{ pointerEvents: videoReady ? 'none' : 'all' }}
+        className="fixed inset-0 z-[100] bg-dark-2 flex flex-col items-center justify-center"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="flex flex-col items-center gap-8"
+        >
+          {/* Logo pulse animation */}
+          <motion.img
+            src="/Logo.png"
+            alt="YBM Logo"
+            className="h-24 w-auto object-contain filter brightness-0 invert"
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          {/* Loading bar */}
+          <div className="w-40 h-[2px] bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-primary rounded-full"
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+
       {/* 3.Fullscreen HERO SECTION */}
       <section id="hero" className="w-full relative overflow-hidden">
         {/* Video — drives the section height naturally */}
@@ -249,6 +267,8 @@ export const Home: React.FC = () => {
           muted
           loop
           playsInline
+          preload="auto"
+          onCanPlay={() => setVideoReady(true)}
           className="w-full h-auto block"
         >
           <source src="/hero.mp4" type="video/mp4" />
@@ -396,45 +416,6 @@ export const Home: React.FC = () => {
               <div className="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-lg">
                 <h3 className="font-serif-display text-xl text-dark mb-1">Behind the Scenes</h3>
                 <p className="text-xs text-primary font-bold uppercase tracking-[2px]">Our Craft in Motion</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. BUILDING CONSTRUCTION TIMELINE SCROLL-PINNED SECTION */}
-      <section ref={timelineSectionRef} id="timeline" className="h-[100vh] w-full bg-dark-2 relative overflow-hidden hidden md:block">
-        <div className="w-full h-full flex flex-col lg:flex-row-reverse relative z-10">
-          
-          {/* Visual canvas represent timeline */}
-          <div className="w-full lg:w-3/5 h-1/2 lg:h-full relative">
-            <ThreeCanvas cameraPos={[0, 4, 10]} enableControls={false}>
-              <ConstructionTimeline progress={timelineProgress} />
-            </ThreeCanvas>
-          </div>
-
-          {/* Description panels left */}
-          <div className="w-full lg:w-2/5 h-1/2 lg:h-full flex items-center px-6 md:px-12 bg-dark/20 backdrop-blur-sm">
-            <div className="max-w-md">
-              <span className="text-primary text-[10px] font-sans font-bold tracking-[3px] uppercase mb-4 block">CONSTRUCTION LOGISTICS</span>
-              <h2 className="font-serif-display text-4xl md:text-5xl text-white font-bold leading-tight mb-6">
-                Engineered <br />Step-by-Step
-              </h2>
-              
-              <div className="space-y-6 relative pl-6 border-l border-white/10">
-                {[
-                  { title: "Foundation Excavation", desc: "Grade beams & reinforced concrete foundation blocks rise.", active: timelineProgress < 0.2 },
-                  { title: "Steel Frame Extrusion", desc: "Pillars rise, establishing load paths and Zone III columns.", active: timelineProgress >= 0.2 && timelineProgress < 0.4 },
-                  { title: "Concrete Slabs & Walls", desc: "Floors slice in, concrete blocks block perimeter enclosures.", active: timelineProgress >= 0.4 && timelineProgress < 0.6 },
-                  { title: "Glazing & Window Triggers", desc: "Double-glazed acoustic windows seal facades from drafts.", active: timelineProgress >= 0.6 && timelineProgress < 0.8 },
-                  { title: "Landscaping & Ambient Glow", desc: "Trees grow and interior decorative spotlights fade on.", active: timelineProgress >= 0.8 }
-                ].map((step, idx) => (
-                  <div key={idx} className={`relative transition-all duration-300 ${step.active ? 'opacity-100 translate-x-2' : 'opacity-30'}`}>
-                    <div className={`absolute -left-[30px] top-1.5 w-2.5 h-2.5 rounded-full border border-primary ${step.active ? 'bg-primary shadow-premium-glow' : 'bg-dark-2'}`} />
-                    <h4 className="font-bold text-white mb-1">{step.title}</h4>
-                    <p className="text-xs text-gray">{step.desc}</p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>

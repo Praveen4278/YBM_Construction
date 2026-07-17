@@ -13,15 +13,10 @@ import CompletedProjects from './pages/CompletedProjects';
 import UpcomingProjects from './pages/UpcomingProjects';
 import JointVenture from './pages/JointVenture';
 
-// Global Visuals/Interactions
-import { SoundController } from './components/SoundController';
-
 function App() {
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       <Router>
-        <SoundController />
-        
         <Routes>
           {/* Main Website */}
           <Route path="/" element={<Home />} />
